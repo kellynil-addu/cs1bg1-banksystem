@@ -1,0 +1,5 @@
+Transaction history for account number ACC7952
+Date                 Transaction Type     Amount          New Balance    
+-------------------- -------------------- --------------- ---------------
+2025-04-29 16:12     Initial deposit      +3000.00        3000.00        
+2025-04-29 16:13     Deposit              +40000.00       43000.00       
