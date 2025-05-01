@@ -1,4 +1,4 @@
-Account No. Username             Full Name                      Account Type    Balance        
+Account #  Username             Full Name                      Account Type    Balance        
 ---------- ----------           ----------                     ----------      ----------     
-ACC4681    kelly                Kelly Neil Ang                 Savings         980.00
-ACC7952    kell                 kegsdgds                       Savings         43000.00
+ACC2446    savingstest          John Doe                       Savings         8500.00
+ACC2920    checkingtest         Jane Doe                       Checking        -4000.00

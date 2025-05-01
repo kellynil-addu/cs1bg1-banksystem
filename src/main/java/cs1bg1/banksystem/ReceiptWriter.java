@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class ReceiptWriter {
 
     // DateTimeFormatter is just a class that helps instruct .format() how to format the date
-    private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm");
+    final private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public static void showWithdrawReceipt(Account acc, double amount, LocalDateTime time, String staff_id) {
         String str = "";

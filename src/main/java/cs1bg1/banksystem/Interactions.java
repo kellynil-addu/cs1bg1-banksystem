@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Interactions {
 
-    private static Scanner scanner = new Scanner(System.in);
+    final private static Scanner scanner = new Scanner(System.in);
 
     public static int showMainMenu() {
         System.out.println("╔════════════════════════════════════════════╗");
@@ -27,12 +27,13 @@ public class Interactions {
         return choice;
     }
 
-    public static void showAccountMenu(Bank bank) throws IOException {
+    ///// 1. ACCOUNT /////
+    public static void showAccountMenu(Bank bank, String staff_id) throws IOException {
         // Check if a username exists
         System.out.print("Enter username to check: ");
         String username = scanner.nextLine();
 
-        if (bank.checkIfExists(username) == true) {
+        if (bank.isUsernameTaken(username) == true) {
             System.out.println("Account already exists.");
             return;
         }
@@ -44,16 +45,13 @@ public class Interactions {
         System.out.println("╠════════════════════════════════════════════╣");
         System.out.println("║ Please enter the details to create account ║");
         System.out.println("╚════════════════════════════════════════════╝");
-
-        // FIXME: Full name should automatically be proper cased
         
         System.out.println("1. Savings Account");
         System.out.println("2. Checking Account");
-        int type = askForType("Select account type:");
-        String fullname = askForFullname("Enter your full name:");
-        double init_deposit = askForMinimumAmount("Enter initial deposit:", 1000.0);
+        int type = askForType("Select account type: ");
+        String fullname = askForFullname("Enter your full name: ");
+        double init_deposit = askForMinimumAmount("Enter initial deposit: ", 1000.0);
 
-    
         Account account;
         String acc_num = bank.generateAccountNumber();
         if (type == 1) {
@@ -64,6 +62,7 @@ public class Interactions {
         
         LocalDateTime current_time = LocalDateTime.now();
 
+        // Create the account
         bank.addAccount(account);
         bank.saveToFile();
 
@@ -78,13 +77,15 @@ public class Interactions {
         Interactions.pressEnterToContinue();
     }
 
-    public static void showDepositMenu(Bank bank) throws IOException {
+    ///// 2. DEPOSIT MONEY /////
+    public static void showDepositMenu(Bank bank, String staff_id) throws IOException {
         // Check if account exists
         System.out.print("Enter username of the account: ");
         String username = scanner.nextLine();
         
-        if (bank.checkIfExists(username) == false) {
+        if (bank.isUsernameTaken(username) == false) {
             System.out.println("Account does not exist.");
+            Interactions.pressEnterToContinue();
             return;
         }
 
@@ -94,70 +95,64 @@ public class Interactions {
         System.out.print("Enter amount to deposit: ");
         double amt = scanner.nextDouble(); 
         scanner.nextLine();
-        
-        if (amt <= 0) {
-            System.out.println("Amount must exceed minimum value.");
-            return;
-        }
 
         // Call deposit method
-        account.deposit(amt);
-        bank.saveToFile();
-        LocalDateTime current_time = LocalDateTime.now();
-        TransactionLogger.addRecord(account, current_time, "Deposit", amt);
-        ReceiptWriter.showDepositReceipt(account, amt, current_time, account.getAccNum());
-        
+        if (account.canDepositAmount(amt) == false) {
+            System.out.println("Deposit process failed.");
+        } else {
+            account.deposit(amt);
+            bank.saveToFile();
+            LocalDateTime current_time = LocalDateTime.now();
+            TransactionLogger.addRecord(account, current_time, "Deposit", amt);
+            ReceiptWriter.showDepositReceipt(account, amt, current_time, staff_id);
+            System.out.println("✔ Deposit process was performed succesfully.");
+        }
+
         Interactions.pressEnterToContinue();
     }
 
-    public static void showWithdrawMenu(Bank bank) throws IOException {
+
+    ///// 3. WITHDRAW MONEY /////
+    public static void showWithdrawMenu(Bank bank, String staff_id) throws IOException {
         // Check if account exists
-        System.out.print("Enter username of your account: ");
+        System.out.print("Enter username of the account: ");
         String username = scanner.nextLine();
         
-        if (bank.checkIfExists(username) == false) {
-            System.out.println("Account does not exist. Please register first.");
+        if (bank.isUsernameTaken(username) == false) {
+            System.out.println("Account does not exist.");
+            Interactions.pressEnterToContinue();
             return;
         }
 
         Account account = bank.getAccountByUsername(username);
-
-        if (account.getBalance() <= 0) {
-            System.out.println("This account does not have funds to withdraw from.");
-            return;
-        }
 
         // Ask amount
         System.out.print("Enter amount to withdraw: ");
         double amt = scanner.nextDouble();
         scanner.nextLine();
 
-        if (amt <= 0) {
-            System.out.println("Amount must be a non-negative number.");
-            return;
-        }
-
-        if (amt > account.getBalance()) {
-            System.out.println("Insufficient funds.");
-            return;
-        }
-
         // Call withdraw method
-        account.withdraw(amt);
-        bank.saveToFile();
-        LocalDateTime current_time = LocalDateTime.now();
-        TransactionLogger.addRecord(account, current_time, "Withdraw", -amt);
-        ReceiptWriter.showWithdrawReceipt(account, amt, current_time, account.getAccNum());
-        
+        if (account.canWithdrawAmount(amt) == false) {
+            System.out.println("Withdraw process failed.");
+        } else {
+            account.withdraw(amt);
+            bank.saveToFile();
+            LocalDateTime current_time = LocalDateTime.now();
+            TransactionLogger.addRecord(account, current_time, "Withdraw", -amt);
+            ReceiptWriter.showWithdrawReceipt(account, amt, current_time, staff_id);
+            System.out.println("✔ Withdraw process was performed successfully.");
+        }
+
         Interactions.pressEnterToContinue();
     }
 
+    ///// 4. CHECK BALANCE /////
     public static void showBalanceMenu(Bank bank) {
         // Check if account exists
-        System.out.print("Enter username of your account: ");
+        System.out.print("Enter username of the account: ");
         String username = scanner.nextLine();
         
-        if (bank.checkIfExists(username) == false) {
+        if (bank.isUsernameTaken(username) == false) {
             System.out.println("Account does not exist. Please register first.");
             return;
         }
@@ -177,6 +172,7 @@ public class Interactions {
         Interactions.pressEnterToContinue();
     }
 
+    ///// 5. VIEW ALL ACCOUNTS /////
     public static void showAllAccounts(Bank bank) throws IOException {
         String table = bank.listAllAccountsInTable();
         System.out.println(table);
@@ -189,6 +185,7 @@ public class Interactions {
         Interactions.pressEnterToContinue();
     }
 
+    ///// 6. EXIT /////
     public static void goodbye() {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════╗");
@@ -196,10 +193,12 @@ public class Interactions {
         System.out.println("╚════════════════════════════════════════════╝");
     }
 
+
+    
     // HELPER FUNCTIONS
 
     private static void pressEnterToContinue() {
-        System.out.println("Press enter to continue...");
+        System.out.print("Press enter to continue... ");
         scanner.nextLine();
     }
 
@@ -222,10 +221,28 @@ public class Interactions {
             System.out.print(mgs);
             fullname = scanner.nextLine();
             if (fullname.isEmpty()) {
-                System.out.println("Full name cannot be empty. Please try again.");
+                System.out.println("Answer cannot be empty. Please try again.");
             }
         } while (fullname.isEmpty());
-        return fullname;
+        return Interactions.toProperCase(fullname);
+    }
+    
+    private static String toProperCase(String str) {
+
+        if (str.isEmpty()) return str;
+
+        int space = str.indexOf(" ");
+
+        if (space == -1) {
+            return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+        } else {
+            String first = str.substring(0, space);
+            String second = str.substring(space + 1);
+
+            String first_proper = first.substring(0, 1).toUpperCase() + first.substring(1).toLowerCase();
+            String second_proper = toProperCase(second);
+            return first_proper + " " + second_proper;
+        }
     }
 
     private static double askForMinimumAmount(String msg, double min) {

@@ -40,6 +40,8 @@ public class Bank {
 
             line_scanner.close();
         }
+
+        scanner.close();
     }
 
     public String listAllAccountsInTable() {
@@ -51,7 +53,7 @@ public class Bank {
         // (some account here)
 
         str += String.format("%-10s %-20s %-30s %-15s %-15s\n", 
-            "Account No.", "Username", "Full Name", "Account Type", "Balance");
+            "Account #", "Username", "Full Name", "Account Type", "Balance");
 
         str += String.format("%-10s %-20s %-30s %-15s %-15s\n",
             "----------", "----------", "----------", "----------", "----------");
@@ -69,17 +71,30 @@ public class Bank {
     }
 
     public String generateAccountNumber() {
-        int randomNum = (int) (Math.random() * 9000) + 1000;
-        return "ACC" + randomNum;
+        String acc_num;
+        do {
+            int randomNum = (int) (Math.random() * 9000) + 1000;
+            acc_num = "ACC" + randomNum;
+        } while (isAccNumTaken(acc_num));
+        return acc_num;
     }
 
     public void addAccount(Account acc) {
         account_list.add(acc);
     }
 
-    public boolean checkIfExists(String username) {
+    public boolean isUsernameTaken(String username) {
         for (Account acc : account_list) {
             if (acc.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAccNumTaken(String acc_num) {
+        for (Account acc : account_list) {
+            if (acc.getAccNum().equals(acc_num)) {
                 return true;
             }
         }

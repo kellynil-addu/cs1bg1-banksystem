@@ -27,6 +27,10 @@ public abstract class Account {
         this.balance = balance;
     }
 
+    abstract public boolean canDepositAmount(double amount);
+
+    abstract public boolean canWithdrawAmount(double amount);
+
     public void deposit(double amount) {
         balance += amount;
     }

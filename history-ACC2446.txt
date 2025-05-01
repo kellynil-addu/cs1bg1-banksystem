@@ -1,0 +1,7 @@
+Transaction history for account number ACC2446
+Date                 Transaction Type     Amount          New Balance    
+-------------------- -------------------- --------------- ---------------
+2025-05-01 19:57     Initial deposit      +10000.00       10000.00       
+2025-05-01 19:59     Deposit              +1000.00        11000.00       
+2025-05-01 20:13     Deposit              +7500.00        18500.00       
+2025-05-01 20:13     Withdraw             -10000.00       8500.00        

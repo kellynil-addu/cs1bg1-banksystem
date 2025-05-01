@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class TransactionLogger {
     // DateTimeFormatter is just a class that helps instruct .format() how to format the date
-    private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static DateTimeFormatter datetime_format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public static void createRecordFile(Account acc) throws IOException {
         String str = "";
@@ -25,9 +25,9 @@ public class TransactionLogger {
 
     public static void addRecord(Account acc, LocalDateTime date, String transactionType, double amount) throws IOException {
         String output = String.format("%-20s %-20s %-15s %-15s\n", 
-            date.format(dtf), 
+            date.format(datetime_format), 
             transactionType, 
-            amount >= 0 ? String.format("+%.2f", amount) : String.format("-%.2f", amount), 
+            amount >= 0 ? String.format("+%.2f", amount) : String.format("%.2f", amount), 
             String.format("%.2f", acc.getBalance()));
 
         FileWriter writer = new FileWriter(String.format("history-%s.txt", acc.getAccNum()), true);
