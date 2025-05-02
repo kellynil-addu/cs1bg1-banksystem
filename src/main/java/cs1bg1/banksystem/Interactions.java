@@ -37,6 +37,7 @@ public class Interactions {
             System.out.println("Account already exists.");
             return;
         }
+        System.out.println("Username is available!");
 
         // Continue with account creation
         System.out.println();
@@ -49,7 +50,7 @@ public class Interactions {
         System.out.println("1. Savings Account");
         System.out.println("2. Checking Account");
         int type = askForType("Select account type: ");
-        String fullname = askForFullname("Enter your full name: ");
+        String fullname = askForFullname("Enter customer's full name: ");
         double init_deposit = askForMinimumAmount("Enter initial deposit: ", 1000.0);
 
         Account account;

@@ -14,6 +14,9 @@ public class Bank {
     public Bank(String file_path) throws IOException, FileNotFoundException {
         this.file_path = file_path;
 
+        FileWriter writer = new FileWriter(file_path, true);
+        writer.close();
+
         Scanner scanner = new Scanner(new FileReader(file_path));
         
         account_list = new ArrayList<>();

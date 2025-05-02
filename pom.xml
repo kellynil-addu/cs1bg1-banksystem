@@ -7,6 +7,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>cs1bg1.banksystem.Cs1bg1BankSystem</exec.mainClass>
+        <exec.mainClass>cs1bg1.banksystem.Main</exec.mainClass>
     </properties>
 </project>
