@@ -69,7 +69,7 @@ public class Interactions {
         TransactionLogger.createRecordFile(account);
         TransactionLogger.addRecord(account, current_time, "Initial deposit", init_deposit);
 
-        ReceiptWriter.showDepositReceipt(account, init_deposit, current_time, acc_num);
+        ReceiptWriter.showDepositReceipt(account, init_deposit, current_time, staff_id);
 
         System.out.println("✔ Account created successfully.");
         System.out.println("➤ Your new Account Number is: " + account.getAccNum());

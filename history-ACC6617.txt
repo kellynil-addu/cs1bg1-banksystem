@@ -1,0 +1,4 @@
+Transaction history for account number ACC6617
+Date                 Transaction Type     Amount          New Balance    
+-------------------- -------------------- --------------- ---------------
+2025-05-10 19:43     Initial deposit      +1000.00        1000.00        
