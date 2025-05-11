@@ -24,14 +24,14 @@ public class Bank {
         while (scanner.hasNextLine()) {
 
             // Read each line from the file
-            String line = scanner.nextLine(); //ACC2446,savingstest,John Doe,Savings,9500.00
+            String line = scanner.nextLine(); // nextLine() will return: ACC2446,savingstest,John Doe,Savings,9500.00
             Scanner line_scanner = new Scanner(line);
             line_scanner.useDelimiter(",");
 
             // Read the account details
-            String acc_num = line_scanner.next(); //ACC2446
-            String username = line_scanner.next(); //savingstest
-            String fullname = line_scanner.next(); //John Doe
+            String acc_num = line_scanner.next(); // returns: ACC2446
+            String username = line_scanner.next(); // returns: savingstest
+            String fullname = line_scanner.next(); // returns: John Doe
             String type = line_scanner.next(); 
             double balance = line_scanner.nextDouble();
 

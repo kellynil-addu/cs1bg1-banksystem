@@ -17,8 +17,6 @@ public abstract class Account {
     private String type;
     private double balance;
 
-    // private String date;
-
     public Account(String acc_num, String username, String fullname, String type, double balance) {
         this.acc_num = acc_num;
         this.username = username;
