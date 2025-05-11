@@ -4,8 +4,8 @@ public class SavingsAccount extends Account {
 
     // Savings accounts usually restrict the deposit amount per transaction.
 
-    final private double MAX_DEPOSIT = 7500;
-    final private double MIN_DEPOSIT = 100;
+    final public double MAX_DEPOSIT = 7500;
+    final public double MIN_DEPOSIT = 100;
 
     public SavingsAccount(String acc_num, String username, String fullname, double balance) {
         super(acc_num, username, fullname, "Savings", balance);
