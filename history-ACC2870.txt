@@ -1,0 +1,4 @@
+Transaction history for account number ACC2870
+Date                 Transaction Type     Amount          New Balance    
+-------------------- -------------------- --------------- ---------------
+2025-05-12 22:23     Initial deposit      +1200.00        1200.00        

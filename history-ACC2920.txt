@@ -1,6 +1,0 @@
-Transaction history for account number ACC2920
-Date                 Transaction Type     Amount          New Balance    
--------------------- -------------------- --------------- ---------------
-2025-05-01 20:16     Initial deposit      +5000.00        5000.00        
-2025-05-01 20:17     Deposit              +10000.00       15000.00       
-2025-05-01 20:17     Withdraw             -19000.00       -4000.00       
